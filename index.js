@@ -1,10 +1,12 @@
 const express = require('express');
 const app = express();
 const v1Routes = require('./routes');
-const { connect } = require('mongoose');
 const dbConnect = require('./config/db');
 
 const notFound = express.Router()
+
+app.set('view engine', 'ejs');
+ 
 
 app.use(express.json());
 app.use(express.urlencoded({
@@ -22,7 +24,7 @@ notFound.use((req, res) => {
 
 app.use(notFound);
 
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT||5000, () => {
   console.log("server started at port 5000")
   dbConnect()
 });
