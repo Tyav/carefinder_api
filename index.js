@@ -22,7 +22,7 @@ notFound.use((req, res) => {
 
 app.use(notFound);
 
-app.listen(5000, () => {
+app.listen(process.env.PORT, () => {
   console.log("server started at port 5000")
   dbConnect()
 });
