@@ -24,3 +24,11 @@ exports.updateHospitalValidation = {
     id: hexString.required()
   })
 };
+
+exports.downloadCSV = {
+  query: Joi.object({
+    redirect: Joi.string().uri().required(),
+    city: hexString,
+    search: Joi.string()
+  })
+}
