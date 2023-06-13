@@ -1,6 +1,7 @@
 const { getCity, getManyCitiesByIds } = require("../Services/cityService")
 const { getHospitals, createHospital, getHospitalById, updateHospital } = require("../Services/hospitalService")
 const { getState } = require("../Services/stateService")
+const { csvMaker } = require("../utils/csv")
 
 exports.getAllHospitals = async (req, res) => {
 
@@ -66,5 +67,21 @@ exports.updateHospital = async (req, res) => {
   res.status(200).json({
     name: 'hospital',
     data: hospital
+  })
+}
+
+exports.exportHospitals = async (req, res) => {
+  const { redirect, ...query } = req.query
+
+  const hospitals = await getHospitals(query)
+  const data = csvMaker(hospitals, [
+    { as: 'name', location: 'name'},
+    { as: 'address', location: 'address'},
+    { as: 'email', location: 'email'},
+    { as: 'state', location: 'state.name'},
+    { as: 'nearbyCities', location: 'nearbyCities.name'},
+  ])
+  res.render('download', {
+    data, redirect: redirect || 'https://www.google.com'
   })
 }

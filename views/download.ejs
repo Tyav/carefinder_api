@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    Your download would start automatically, if it doesn't click the button below.
+    <button id="action">Click to Download</button>
+  </body>
+  <script>
+    const download = function (data) {
+      const blob = new Blob([data], { type: "text/csv" });
+
+      const url = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+
+      a.setAttribute("href", url);
+
+      a.setAttribute("download", "download.csv");
+
+      a.click();
+    };
+
+    const get = async function () {
+      // JavaScript object
+      const data = `<%= data %>`;
+      download(data);
+    };
+
+    const btn = document.getElementById("action");
+    btn.addEventListener("click", get);
+    btn.click();
+    window.location.replace(`<%= redirect %>`);
+  </script>
+</html>
