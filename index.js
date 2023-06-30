@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const v1Routes = require('./routes');
 const dbConnect = require('./config/db');
@@ -6,6 +7,8 @@ const dbConnect = require('./config/db');
 const notFound = express.Router()
 
 app.set('view engine', 'ejs');
+
+app.use(cors())
  
 
 app.use(express.json());
